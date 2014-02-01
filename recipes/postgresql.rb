@@ -21,7 +21,7 @@ end
 
 postgresql_database node[:razor][:database][:name] do
   template 'DEFAULT'
-  encoding 'DEFAULT'
+  encoding 'UTF-8'
   tablespace 'DEFAULT'
   connection_limit '-1'
   owner node[:razor][:database][:user]
