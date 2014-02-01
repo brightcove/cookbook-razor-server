@@ -10,6 +10,9 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION')) rescue "0
   supports os
 end
 
-depends "apt"  # In order to notify execute[apt-get-update]
+depends "apt"
+depends "ark"
 depends "build-essential"
+depends "nginx"
 depends "postgresql"
+depends "tftp"

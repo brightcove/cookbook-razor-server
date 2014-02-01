@@ -3,8 +3,8 @@
 # WARNING: This is a generated file.  Manual changes will be ignored.
 #
 # Data filled in by Puppet about where we are installed...
-razor='<%= scope.lookupvar('::razor::server::dest') %>'
-torquebox='<%= scope.lookupvar('::razor::torquebox::dest')%>'
+razor='<%= node[:razor][:dest] %>'
+torquebox='<%= node[:razor][:torquebox][:dest] %>'
 jruby="${torquebox}/jruby"
 
 # Make sure our path points to the right general location.

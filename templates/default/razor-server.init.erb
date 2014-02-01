@@ -14,7 +14,7 @@ NAME="razor-server"
 WAIT=30 # seconds
 
 # Set defaults.
-TORQUEBOX_HOME="<%= @dest %>"
+TORQUEBOX_HOME="<%= dest %>"
 JBOSS_HOME="${TORQUEBOX_HOME}/jboss"
 JRUBY_HOME="${TORQUEBOX_HOME}/jruby"
 export TORQUEBOX_HOME JBOSS_HOME JRUBY_HOME
@@ -29,7 +29,7 @@ JBOSS_LOG_DIR="/var/log/${NAME}"
 JBOSS_CONSOLE_LOG="${JBOSS_LOG_DIR}/console.log"
 export JBOSS_LOG_DIR JBOSS_CONSOLE_LOG
 
-JBOSS_USER="<%= @user %>"
+JBOSS_USER="<%= user %>"
 
 JBOSS_CONFIG=standalone.xml
 JBOSS_SCRIPT="${JBOSS_HOME}/bin/standalone.sh"
