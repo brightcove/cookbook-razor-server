@@ -8,6 +8,7 @@ package node[:razor][:libarchive]
 
 package "unzip"
 package "curl"
+package "openipmi"
 
 # Install Java
 include_recipe "java"
