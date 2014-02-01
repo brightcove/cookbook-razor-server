@@ -60,6 +60,20 @@ file "#{node[:razor][:torquebox][:dest]}/log/production.log" do
   mode  00660
 end
 
+execute "Create/Migrate database" do
+  command "razor-admin -e production migrate-database"
+  path "/usr/local/bin"
+  action :nothing
+  subscribes :run, "template[#{node[:razor][:dest]}/config.yaml.erb]", :immediately
+end
+
+template "#{node[:razor][:dest]}/config.yaml.erb" do
+  source "config.yaml.erb"
+  owner node[:razor][:user]
+  group node[:razor][:group]
+  mode  00660
+end
+
 if node[:razor][:tftp]
   indclude_recipe "razor-server::tftp"
 end
