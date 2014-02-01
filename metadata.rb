@@ -13,6 +13,7 @@ end
 depends "apt"
 depends "ark"
 depends "build-essential"
+depends "java"
 depends "nginx"
 depends "postgresql"
 depends "tftp"

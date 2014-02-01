@@ -15,7 +15,7 @@ end
 directory "#{node[:razor][:torquebox][:dest]}/jboss/standalone" do
   owner node[:razor][:torquebox][:user]
   group node[:razor][:torquebox][:group]
-  action :modify
+  action :create
 end
 
 directory "/var/log/razor-server" do
