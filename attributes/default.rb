@@ -5,6 +5,8 @@
 node.default[:razor][:name] = node[:fqdn]
 node.default[:razor][:user] = "razor-server"
 node.default[:razor][:group] = "razor-server"
+
+node.default[:razor][:dhcp] = true
 node.default[:razor][:tftp] = true
 
 node.default[:razor][:url] = "http://links.puppetlabs.com/razor-server-latest.zip"

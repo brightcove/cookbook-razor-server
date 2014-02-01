@@ -64,3 +64,6 @@ if node[:razor][:tftp]
   indclude_recipe "razor-server::tftp"
 end
 
+if node[:razor][:dhcp]
+  include_recipe "razor-server::dhcp"
+end
