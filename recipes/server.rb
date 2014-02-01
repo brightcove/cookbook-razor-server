@@ -14,17 +14,6 @@ ark "razor-server" do
   action :install
 end
 
-execute "Deploy razor into torquebox" do
-  command "#{node[:razor][:torquebox][:dest]}/jruby/bin/torquebox deploy --env production"
-  creates "#{node[:razor][:torquebox][:dest]}/jboss/standalone/deployments/razor-knob.yml"
-  environment(
-    "TORQUEBOX_HOME" => node[:razor][:torquebox][:dest],
-    "JBOSS_HOME" => "#{node[:razor][:torquebox][:dest]}/jboss",
-    "JRUBY_HOME" => "#{node[:razor][:torquebox][:dest]}/jruby"
-  )
-  path  "#{node[:razor][:torquebox][:dest]}/jruby/bin:/bin:/usr/bin:/usr/local/bin"
-end
-
 template "#{node[:razor][:torquebox][:dest]}/bin/razor-binary-wrapper" do
   source "razor-binary-wrapper.erb"
   owner  "root"
@@ -40,7 +29,7 @@ file "#{node[:razor][:torquebox][:dest]}/bin/razor-admin" do
   mode  00755
 end
 
-directory "/var/lib/razor/repo-store" do
+directory node[:razor][:repo] do
   owner node[:razor][:user]
   group node[:razor][:group]
   recursive true
@@ -60,6 +49,14 @@ file "#{node[:razor][:torquebox][:dest]}/log/production.log" do
   mode  00660
 end
 
+ark "razor-microkernel" do
+  url   node[:razor][:microkernel][:url]
+  path  "#{node[:razor][:repo]}/"
+  owner node[:razor][:user]
+  group node[:razor][:group]
+  action :put
+end
+
 execute "Create/Migrate database" do
   command "razor-admin -e production migrate-database"
   path "/usr/local/bin"
@@ -72,6 +69,17 @@ template "#{node[:razor][:dest]}/config.yaml.erb" do
   owner node[:razor][:user]
   group node[:razor][:group]
   mode  00660
+end
+
+execute "Deploy razor into torquebox" do
+  command "#{node[:razor][:torquebox][:dest]}/jruby/bin/torquebox deploy --env production"
+  creates "#{node[:razor][:torquebox][:dest]}/jboss/standalone/deployments/razor-knob.yml"
+  environment(
+    "TORQUEBOX_HOME" => node[:razor][:torquebox][:dest],
+    "JBOSS_HOME" => "#{node[:razor][:torquebox][:dest]}/jboss",
+    "JRUBY_HOME" => "#{node[:razor][:torquebox][:dest]}/jruby"
+  )
+  path  "#{node[:razor][:torquebox][:dest]}/jruby/bin:/bin:/usr/bin:/usr/local/bin"
 end
 
 if node[:razor][:tftp]
