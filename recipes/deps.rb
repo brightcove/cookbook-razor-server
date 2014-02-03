@@ -2,6 +2,7 @@
 # Cookbook Name:: razor-server
 # Recipe:: deps
 
+include_recipe "apt"
 include_recipe "build-essential"
 
 package node[:razor][:libarchive]
@@ -24,4 +25,4 @@ user node[:razor][:user] do
   comment 'razor-server daemon user'
 end
 
-include_recipe "razor-server::postgresql"
+#include_recipe "razor-server::postgresql"

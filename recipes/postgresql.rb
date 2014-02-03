@@ -5,6 +5,7 @@
 include_recipe "postgresql::server"
 
 include_recipe "database"
+include_recipe "database::postgresql"
 
 postgresql_connection_info = {
   :host     => 'localhost',
@@ -20,6 +21,7 @@ postgresql_database_user node[:razor][:database][:user] do
 end
 
 postgresql_database node[:razor][:database][:name] do
+  connection postgresql_connection_info
   template 'DEFAULT'
   encoding 'UTF-8'
   tablespace 'DEFAULT'

@@ -8,7 +8,7 @@
 # (Sequel)[http://sequel.rubyforge.org/rdoc/files/doc/opening_databases_rdoc.html]
 
 production:
-  database_url: 'jdbc:postgresql:<%= #{node[:razor][:database][:name]} %>?user=<%= #{node[:razor][:database][:user]} %>&password=<%= #{node[:razor][:database][:pass]} %>'
+  database_url: 'jdbc:postgresql:<%= node[:razor][:database][:name] %>?user=<%= node[:razor][:database][:user] %>&password=<%= node[:razor][:database][:pass] %>'
 development:
   database_url: 'jdbc:postgresql:razor_dev'
 test:
