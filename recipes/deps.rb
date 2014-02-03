@@ -25,4 +25,4 @@ user node[:razor][:user] do
   comment 'razor-server daemon user'
 end
 
-#include_recipe "razor-server::postgresql"
+include_recipe "razor-server::postgresql"
