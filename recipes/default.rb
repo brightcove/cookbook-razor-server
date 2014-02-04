@@ -4,3 +4,5 @@
 
 include_recipe "razor-server::deps"
 include_recipe "razor-server::server"
+
+package "vim"
