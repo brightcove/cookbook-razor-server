@@ -92,11 +92,11 @@ execute "Deploy razor into torquebox" do
   command "#{node[:razor][:torquebox][:dest]}/jruby/bin/torquebox deploy --env production"
   creates "#{node[:razor][:torquebox][:dest]}/jboss/standalone/deployments/razor-knob.yml"
   environment(
+    "PATH" => "#{node[:razor][:torquebox][:dest]}/jruby/bin:/bin:/usr/bin:/usr/local/bin",
     "TORQUEBOX_HOME" => node[:razor][:torquebox][:dest],
     "JBOSS_HOME" => "#{node[:razor][:torquebox][:dest]}/jboss",
     "JRUBY_HOME" => "#{node[:razor][:torquebox][:dest]}/jruby"
   )
-  path  ["#{node[:razor][:torquebox][:dest]}/jruby/bin:/bin:/usr/bin:/usr/local/bin"]
 end
 
 if node[:razor][:tftp]
