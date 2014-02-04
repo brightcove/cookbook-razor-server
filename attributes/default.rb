@@ -10,6 +10,7 @@ node.default[:razor][:dhcp][:enable] = true
 node.default[:razor][:tftp][:enable] = true
 
 node.default[:razor][:url] = "http://links.puppetlabs.com/razor-server-latest.zip"
+node.default[:razor][:base] = "/opt"
 node.default[:razor][:dest] = "/opt/razor-server"
 node.default[:razor][:repo] = "var/lib/razor/repo-store"
 
