@@ -1,17 +1,18 @@
+# encoding: UTF-8
 #
 # Cookbook Name:: razor-server
 # Recipe:: postgresql
 
-include_recipe "postgresql::server"
+include_recipe 'postgresql::server'
 
-include_recipe "database"
-include_recipe "database::postgresql"
+include_recipe 'database'
+include_recipe 'database::postgresql'
 
 postgresql_connection_info = {
-  :host     => 'localhost',
-  :port     => node['postgresql']['config']['port'],
-  :username => 'postgres',
-  :password => node['postgresql']['password']['postgres']
+  host: 'localhost',
+  port: node['postgresql']['config']['port'],
+  username: 'postgres',
+  password: node['postgresql']['password']['postgres']
 }
 
 postgresql_database_user node[:razor][:database][:user] do
@@ -29,4 +30,3 @@ postgresql_database node[:razor][:database][:name] do
   owner node[:razor][:database][:user]
   action :create
 end
-

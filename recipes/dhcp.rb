@@ -1,8 +1,9 @@
+# encoding: UTF-8
 #
 # Cookbook Name:: razor-server
 # Recipe:: dhcp
 
-include_recipe "dhcp::server"
+include_recipe 'dhcp::server'
 
 dhcp_subnet node[:razor][:dhcp][:subnet] do
   range node[:razor][:dhcp][:range]

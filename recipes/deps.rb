@@ -1,18 +1,19 @@
+# encoding: UTF-8
 #
 # Cookbook Name:: razor-server
 # Recipe:: deps
 
-include_recipe "apt"
-include_recipe "build-essential"
+include_recipe 'apt'
+include_recipe 'build-essential'
 
 package node[:razor][:libarchive]
 
-package "unzip"
-package "curl"
-package "openipmi"
+package 'unzip'
+package 'curl'
+package 'openipmi'
 
 # Install Java
-include_recipe "java"
+include_recipe 'java'
 
 group node[:razor][:group]
 
@@ -25,4 +26,4 @@ user node[:razor][:user] do
   comment 'razor-server daemon user'
 end
 
-include_recipe "razor-server::postgresql"
+include_recipe 'razor-server::postgresql'
