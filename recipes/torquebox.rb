@@ -4,14 +4,15 @@
 #
 
 execute "wget torquebox" do
-  command "wget #{node[:razor][:torquebox][:url]} -O /tmp/torquebox.zip"
+  command "wget #{node[:razor][:torquebox][:url]} -O /tmp/razor-torquebox.zip"
+  creates "/tmp/razor-torquebox.zip"
 end
 
 ark "razor-torquebox" do
   version  node[:razor][:torquebox][:version]
   checksum node[:razor][:torquebox][:checksum]
 #  url      node[:razor][:torquebox][:url]
-  url      "file:///tmp/torquebox.zip"
+  url      "file:///tmp/razor-torquebox.zip"
   path     node[:razor][:torquebox][:base]
   owner    node[:razor][:torquebox][:user]
   group    node[:razor][:torquebox][:group]
