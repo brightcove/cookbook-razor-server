@@ -7,6 +7,7 @@ include_recipe "razor-server::torquebox"
 
 execute "wget razor-server" do
   command "wget #{node[:razor][:url]} -O /tmp/razor-server.zip"
+  creates "/tmp/razor-server.zip"
 end
 
 ark "razor-server" do
@@ -55,31 +56,22 @@ file "#{node[:razor][:dest]}/log/production.log" do
   mode  00660
 end
 
-execute "wget razor-microkernel" do
-  command "wget #{node[:razor][:microkernel][:url]} -O /tmp/razor-microkernel.tar.gz"
+execute "Install Bundler" do
+  command "gem install bundler"
+  path    ["#{node[:razor][:torquebox][:dest]}/jruby/bin"]
+  cwd     node[:razor][:dest]
+  environment(
+    "PATH" => "#{node[:razor][:torquebox][:dest]}/jruby/bin:/bin:/usr/bin:/usr/local/bin",
+  )
 end
 
-ark "razor-microkernel" do
-#  url   node[:razor][:microkernel][:url]
-  url   "file:///tmp/razor-microkernel.tar.gz"
-  path  "#{node[:razor][:repo]}/"
-  owner node[:razor][:user]
-  group node[:razor][:group]
-  action :put
-end
-
-execute "Create/Migrate database" do
-  command "razor-admin -e production migrate-database"
-  path    ["/usr/local/bin"]
-  action  :nothing
-  subscribes :run, "template[#{node[:razor][:dest]}/config.yaml.erb]", :immediately
-end
-
-template "#{node[:razor][:dest]}/config.yaml" do
-  source "config.yaml.erb"
-  owner node[:razor][:user]
-  group node[:razor][:group]
-  mode  00660
+execute "Install Gems" do
+  command "bundle install"
+  path    ["#{node[:razor][:torquebox][:dest]}/jruby/bin"]
+  cwd     node[:razor][:dest]
+  environment(
+    "PATH" => "#{node[:razor][:torquebox][:dest]}/jruby/bin:/bin:/usr/bin:/usr/local/bin",
+  )
 end
 
 execute "Deploy razor into torquebox" do
@@ -93,6 +85,36 @@ execute "Deploy razor into torquebox" do
     "JRUBY_HOME" => "#{node[:razor][:torquebox][:dest]}/jruby"
   )
 end
+
+template "#{node[:razor][:dest]}/config.yaml" do
+  source "config.yaml.erb"
+  owner node[:razor][:user]
+  group node[:razor][:group]
+  mode  00660
+end
+
+execute "Create/Migrate database" do
+  command "razor-admin -e production migrate-database"
+  path    ["/usr/local/bin"]
+  cwd     node[:razor][:dest]
+  action  :nothing
+  subscribes :run, "template[#{node[:razor][:dest]}/config.yaml]", :immediately
+end
+
+execute "wget razor-microkernel" do
+  command "wget #{node[:razor][:microkernel][:url]} -O /tmp/razor-microkernel.tar.gz"
+  creates "/tmp/razor-microkernel.tar.gz"
+end
+
+ark "razor-microkernel" do
+#  url   node[:razor][:microkernel][:url]
+  url   "file:///tmp/razor-microkernel.tar.gz"
+  path  "#{node[:razor][:repo]}/"
+  owner node[:razor][:user]
+  group node[:razor][:group]
+  action :put
+end
+
 
 if node[:razor][:tftp]
   include_recipe "razor-server::tftp"

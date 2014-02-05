@@ -10,7 +10,7 @@ jruby="${torquebox}/jruby"
 # Make sure our Gemfile is found by the tool.  This is needed because Bundler
 # checks for the Gemfile relative to the current working directory, not the
 # code you are running -- so fails for anything, say, in the path. :/
-export BUNDLE_GEMFILE="${RAZOR_HOME}/Gemfile"
+export BUNDLE_GEMFILE="${razor}/Gemfile"
 
 # Make sure our path points to the right general location.
 export PATH="${razor}/bin:${jruby}/bin:${PATH}"
