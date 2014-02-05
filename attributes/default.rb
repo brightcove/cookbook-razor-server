@@ -44,7 +44,7 @@ node.default[:dhcp][:networks] = [ "192.168.10.0/24" ]
 
 case node[:platform]
 when "ubuntu","debian"
-  node.default[:razor][:libarchive] = "libarchive12"
+  node.default[:razor][:libarchive] = "libarchive-dev"
 when "centos","redhat"
   node.default[:razor][:libarchive] = "libarchive-devel"
 end
