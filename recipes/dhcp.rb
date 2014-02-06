@@ -11,13 +11,5 @@ dhcp_subnet node[:razor][:dhcp][:subnet] do
   broadcast node[:razor][:dhcp][:broadcast]
   options node[:razor][:dhcp][:options]
   routers node[:razor][:dhcp][:routers]
-#  evals   node[:razor][:dhcp][:evals]
-evals [
-"if exists user-class and option user-class = \"iPXE\" {",
-"   filename \"bootstrap.ipxe\";",
-" } else {",
-"   filename \"undionly.kpxe\";",
-" }"
-]
-
+  evals   node[:razor][:dhcp][:evals]
 end

@@ -37,13 +37,13 @@ node.default[:razor][:dhcp][:netmask] = '255.255.255.0'
 node.default[:razor][:dhcp][:broadcast] = '192.168.10.255'
 node.default[:razor][:dhcp][:range]   = '192.168.10.200 192.168.10.250'
 #node.default[:razor][:dhcp][:options] = [ "next-server 192.168.10.1" ]
-node.default[:razor][:dhcp][:evals] = [
-"if exists user-class and option user-class = \"iPXE\" {",
-"   filename \"bootstrap.ipxe\";",
-" } else {",
-"   filename \"undionly.kpxe\";",
-" }"
-]
+node.default[:razor][:dhcp][:evals] = [%Q{
+  if exists user-class and option user-class = "iPXE" {
+    filename "bootstrap.ipxe";
+  } else {
+    filename "undionly.kpxe";
+  }
+}]
 
 case node[:platform]
 when 'ubuntu', 'debian'
