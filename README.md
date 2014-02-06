@@ -4,3 +4,8 @@ Still a large work in progress, but it at least gets the [razor-server][] and de
 [razor-server]: https://github.com/puppetlabs/razor-server "razor-server"
 [Puppet module]: https://github.com/puppetlabs/puppetlabs-razor "Puppet module"
 [Chef]: http://www.getchef.com 
+
+Better docs are coming imminently!
+
+# License
+Check the [License](https://github.com/brightcove/cookbook-razor-server/blob/master/LICENSE.txt)
