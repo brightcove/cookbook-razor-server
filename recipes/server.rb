@@ -112,8 +112,8 @@ end
 #end
 
 execute 'wget razor-microkernel' do
-  command "wget #{node[:razor][:microkernel][:url]} -O /tmp/razor-microkernel.tar.gz"
-  creates '/tmp/razor-microkernel.tar.gz'
+  command "wget #{node[:razor][:microkernel][:url]} -O /tmp/razor-microkernel.tar"
+  creates '/tmp/razor-microkernel.tar'
 end
 
 execute 'untar razor-microkernel' do
