@@ -6,8 +6,18 @@
 include_recipe 'dhcp::server'
 
 dhcp_subnet node[:razor][:dhcp][:subnet] do
-  range node[:razor][:dhcp][:range]
   netmask node[:razor][:dhcp][:netmask]
+  range   node[:razor][:dhcp][:range]
+  broadcast node[:razor][:dhcp][:broadcast]
   options node[:razor][:dhcp][:options]
   routers node[:razor][:dhcp][:routers]
+#  evals   node[:razor][:dhcp][:evals]
+evals [
+"if exists user-class and option user-class = \"iPXE\" {",
+"   filename \"bootstrap.ipxe\";",
+" } else {",
+"   filename \"undionly.kpxe\";",
+" }"
+]
+
 end

@@ -16,7 +16,7 @@ node.default[:razor][:dest] = '/opt/razor-server'
 node.default[:razor][:repo] = 'var/lib/razor/repo-store'
 
 node.default[:razor][:microkernel][:version] = '004'
-node.default[:razor][:microkernel][:url] = "https://github.com/puppetlabs/razor-el-mk/archive/release-#{node[:razor][:microkernel][:version]}.tar.gz"
+node.default[:razor][:microkernel][:url] = "http://links.puppetlabs.com/razor-microkernel-#{node[:razor][:microkernel][:version]}.tar"
 
 node.default[:razor][:database][:name] = 'razor-server'
 node.default[:razor][:database][:user] = 'razor-server'
@@ -34,13 +34,16 @@ node.default[:postgresql][:pg_hba] = [
 node.normal[:dhcp][:use_bags] = false
 node.default[:razor][:dhcp][:subnet]  = '192.168.10.0'
 node.default[:razor][:dhcp][:netmask] = '255.255.255.0'
+node.default[:razor][:dhcp][:broadcast] = '192.168.10.255'
 node.default[:razor][:dhcp][:range]   = '192.168.10.200 192.168.10.250'
-# node.default[:razor][:dhcp][:options] = [ "if exists user-class and option user-class = \"iPXE\" {
-#    filename \"bootstrap.ipxe\";
-#  } else {
-#    filename \"undionly.kpxe\";
-#  }"
-# ]
+#node.default[:razor][:dhcp][:options] = [ "next-server 192.168.10.1" ]
+node.default[:razor][:dhcp][:evals] = [
+"if exists user-class and option user-class = \"iPXE\" {",
+"   filename \"bootstrap.ipxe\";",
+" } else {",
+"   filename \"undionly.kpxe\";",
+" }"
+]
 
 case node[:platform]
 when 'ubuntu', 'debian'

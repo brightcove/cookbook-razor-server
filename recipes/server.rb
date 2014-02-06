@@ -102,18 +102,31 @@ execute 'Create/Migrate database' do
   subscribes :run, "template[#{node[:razor][:dest]}/config.yaml]", :immediately
 end
 
+#ark 'razor-microkernel' do
+##  url   node[:razor][:microkernel][:url]
+#  url   'file:///tmp/razor-microkernel.tar.gz'
+#  path  "#{node[:razor][:repo]}/"
+#  owner node[:razor][:user]
+#  group node[:razor][:group]
+#  action :put
+#end
+
 execute 'wget razor-microkernel' do
   command "wget #{node[:razor][:microkernel][:url]} -O /tmp/razor-microkernel.tar.gz"
   creates '/tmp/razor-microkernel.tar.gz'
 end
 
-ark 'razor-microkernel' do
-#  url   node[:razor][:microkernel][:url]
-  url   'file:///tmp/razor-microkernel.tar.gz'
-  path  "#{node[:razor][:repo]}/"
+execute 'untar razor-microkernel' do
+  command "tar -xvf /tmp/razor-microkernel.tar -C #{node[:razor][:repo]}/"
+  creates "#{node[:razor][:repo]}/microkernel"
+end
+
+directory node[:razor][:repo] do
   owner node[:razor][:user]
   group node[:razor][:group]
-  action :put
+  recursive true
+  mode  00755
+  action :create
 end
 
 if node[:razor][:tftp]
