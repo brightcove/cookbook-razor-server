@@ -3,7 +3,8 @@
 # Cookbook Name:: razor-server
 # Attributes:: razor-server
 
-node.default[:razor][:name] = node[:fqdn]
+#node.default[:razor][:name] = node[:fqdn]
+node.default[:razor][:name] = '192.168.10.2'
 node.default[:razor][:user] = 'razor-server'
 node.default[:razor][:group] = 'razor-server'
 
@@ -36,7 +37,7 @@ node.default[:razor][:dhcp][:subnet]  = '192.168.10.0'
 node.default[:razor][:dhcp][:netmask] = '255.255.255.0'
 node.default[:razor][:dhcp][:broadcast] = '192.168.10.255'
 node.default[:razor][:dhcp][:range]   = '192.168.10.200 192.168.10.250'
-#node.default[:razor][:dhcp][:options] = [ "next-server 192.168.10.1" ]
+node.default[:razor][:dhcp][:options] = [ "next-server 192.168.10.2" ]
 node.default[:razor][:dhcp][:evals] = [%Q{
   if exists user-class and option user-class = "iPXE" {
     filename "bootstrap.ipxe";
