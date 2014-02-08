@@ -77,7 +77,7 @@ end
 
 execute 'Deploy razor into torquebox' do
   command "#{node[:razor][:torquebox][:dest]}/jruby/bin/torquebox deploy --env production"
-  creates "#{node[:razor][:torquebox][:dest]}/jboss/standalone/deployments/razor-knob.yml"
+  creates "#{node[:razor][:torquebox][:dest]}/jboss/standalone/deployments/razor-server-knob.yml"
   cwd     node[:razor][:dest]
   environment(
     'PATH' => "#{node[:razor][:torquebox][:dest]}/jruby/bin:/bin:/usr/bin:/usr/local/bin",
