@@ -3,18 +3,22 @@
 # Cookbook Name:: razor-server
 # Attributes:: razor-server
 
+# When DNS is available / already registered
 #node.default[:razor][:name] = node[:fqdn]
+
+# When DNS is NOT available, use direct IP
 node.default[:razor][:name] = '192.168.10.2'
+
 node.default[:razor][:user] = 'razor-server'
 node.default[:razor][:group] = 'razor-server'
 
 node.default[:razor][:dhcp][:enable] = true
 node.default[:razor][:tftp][:enable] = true
 
-node.default[:razor][:url] = 'https://github.com/puppetlabs/razor-server/archive/0.14.0.zip'
-node.default[:razor][:base] = '/opt'
-node.default[:razor][:dest] = '/opt/razor-server'
-node.default[:razor][:repo] = '/var/lib/razor/repo-store'
+node.default[:razor][:install][:url] = 'https://github.com/puppetlabs/razor-server/archive/0.14.0.zip'
+node.default[:razor][:install][:base] = '/opt'
+node.default[:razor][:install][:dest] = '/opt/razor-server'
+node.default[:razor][:install][:repo] = '/var/lib/razor/repo-store'
 
 node.default[:razor][:microkernel][:version] = '004'
 node.default[:razor][:microkernel][:url] = "http://links.puppetlabs.com/razor-microkernel-#{node[:razor][:microkernel][:version]}.tar"

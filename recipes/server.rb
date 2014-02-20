@@ -7,14 +7,14 @@
 include_recipe 'razor-server::torquebox'
 
 execute 'wget razor-server' do
-  command "wget #{node[:razor][:url]} -O /tmp/razor-server.zip"
+  command "wget #{node[:razor][:install][:url]} -O /tmp/razor-server.zip"
   creates '/tmp/razor-server.zip'
 end
 
 ark 'razor-server' do
-#  url   node[:razor][:url]
+#  url   node[:razor][:install][:url]
   url      'file:///tmp/razor-server.zip'
-  path  node[:razor][:base]
+  path  node[:razor][:install][:base]
   owner node[:razor][:user]
   group node[:razor][:group]
   strip_leading_dir true
@@ -22,7 +22,7 @@ ark 'razor-server' do
   action :put
 end
 
-template "#{node[:razor][:dest]}/bin/razor-binary-wrapper" do
+template "#{node[:razor][:install][:dest]}/bin/razor-binary-wrapper" do
   source 'razor-binary-wrapper.erb'
   owner  'root'
   group  'root'
@@ -30,14 +30,14 @@ template "#{node[:razor][:dest]}/bin/razor-binary-wrapper" do
 end
 
 link '/usr/local/bin/razor-admin' do
-  to "#{node[:razor][:dest]}/bin/razor-binary-wrapper"
+  to "#{node[:razor][:install][:dest]}/bin/razor-binary-wrapper"
 end
 
-file "#{node[:razor][:dest]}/bin/razor-admin" do
+file "#{node[:razor][:install][:dest]}/bin/razor-admin" do
   mode  00755
 end
 
-directory node[:razor][:repo] do
+directory node[:razor][:install][:repo] do
   owner node[:razor][:user]
   group node[:razor][:group]
   recursive true
@@ -45,13 +45,13 @@ directory node[:razor][:repo] do
   action :create
 end
 
-directory "#{node[:razor][:dest]}/log" do
+directory "#{node[:razor][:install][:dest]}/log" do
   owner node[:razor][:user]
   group node[:razor][:group]
   mode  00755
 end
 
-file "#{node[:razor][:dest]}/log/production.log" do
+file "#{node[:razor][:install][:dest]}/log/production.log" do
   owner node[:razor][:user]
   group node[:razor][:group]
   mode  00660
@@ -60,7 +60,7 @@ end
 execute 'Install Bundler' do
   command 'gem install bundler'
   path    ["#{node[:razor][:torquebox][:dest]}/jruby/bin"]
-  cwd     node[:razor][:dest]
+  cwd     node[:razor][:install][:dest]
   environment(
     'PATH' => "#{node[:razor][:torquebox][:dest]}/jruby/bin:/bin:/usr/bin:/usr/local/bin",
   )
@@ -69,7 +69,7 @@ end
 execute 'Install Gems' do
   command 'bundle install'
   path    ["#{node[:razor][:torquebox][:dest]}/jruby/bin"]
-  cwd     node[:razor][:dest]
+  cwd     node[:razor][:install][:dest]
   environment(
     'PATH' => "#{node[:razor][:torquebox][:dest]}/jruby/bin:/bin:/usr/bin:/usr/local/bin",
   )
@@ -78,7 +78,7 @@ end
 execute 'Deploy razor into torquebox' do
   command "#{node[:razor][:torquebox][:dest]}/jruby/bin/torquebox deploy --env production"
   creates "#{node[:razor][:torquebox][:dest]}/jboss/standalone/deployments/razor-server-knob.yml"
-  cwd     node[:razor][:dest]
+  cwd     node[:razor][:install][:dest]
   environment(
     'PATH' => "#{node[:razor][:torquebox][:dest]}/jruby/bin:/bin:/usr/bin:/usr/local/bin",
     'TORQUEBOX_HOME' => node[:razor][:torquebox][:dest],
@@ -87,7 +87,7 @@ execute 'Deploy razor into torquebox' do
   )
 end
 
-template "#{node[:razor][:dest]}/config.yaml" do
+template "#{node[:razor][:install][:dest]}/config.yaml" do
   source 'config.yaml.erb'
   owner node[:razor][:user]
   group node[:razor][:group]
@@ -97,15 +97,15 @@ end
 execute 'Create/Migrate database' do
   command 'razor-admin -e production migrate-database'
   path    ['/usr/local/bin']
-  cwd     node[:razor][:dest]
+  cwd     node[:razor][:install][:dest]
   action  :nothing
-  subscribes :run, "template[#{node[:razor][:dest]}/config.yaml]", :immediately
+  subscribes :run, "template[#{node[:razor][:install][:dest]}/config.yaml]", :immediately
 end
 
 #ark 'razor-microkernel' do
 ##  url   node[:razor][:microkernel][:url]
 #  url   'file:///tmp/razor-microkernel.tar.gz'
-#  path  "#{node[:razor][:repo]}/"
+#  path  "#{node[:razor][:install][:repo]}/"
 #  owner node[:razor][:user]
 #  group node[:razor][:group]
 #  action :put
@@ -117,11 +117,11 @@ execute 'wget razor-microkernel' do
 end
 
 execute 'untar razor-microkernel' do
-  command "tar -xvf /tmp/razor-microkernel.tar -C #{node[:razor][:repo]}/"
-  creates "#{node[:razor][:repo]}/microkernel"
+  command "tar -xvf /tmp/razor-microkernel.tar -C #{node[:razor][:install][:repo]}/"
+  creates "#{node[:razor][:install][:repo]}/microkernel"
 end
 
-directory node[:razor][:repo] do
+directory node[:razor][:install][:repo] do
   owner node[:razor][:user]
   group node[:razor][:group]
   recursive true
