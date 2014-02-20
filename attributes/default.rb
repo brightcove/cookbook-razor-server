@@ -15,7 +15,7 @@ node.default[:razor][:group] = 'razor-server'
 node.default[:razor][:dhcp][:enable] = true
 node.default[:razor][:tftp][:enable] = true
 
-node.default[:razor][:install][:url] = 'https://github.com/puppetlabs/razor-server/archive/0.14.0.zip'
+node.default[:razor][:install][:url] = 'https://github.com/puppetlabs/razor-server/archive/0.14.1.zip'
 node.default[:razor][:install][:base] = '/opt'
 node.default[:razor][:install][:dest] = '/opt/razor-server'
 node.default[:razor][:install][:repo] = '/var/lib/razor/repo-store'
