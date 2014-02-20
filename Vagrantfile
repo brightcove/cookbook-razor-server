@@ -44,6 +44,9 @@ Vagrant.configure("2") do |config|
   
     c.vm.provision :chef_solo do |chef|
       chef.json = {
+        "razor" => {
+          "name" => "192.168.10.2"
+        }
       }
   
       chef.run_list = [

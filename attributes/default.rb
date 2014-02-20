@@ -4,10 +4,10 @@
 # Attributes:: razor-server
 
 # When DNS is available / already registered
-#node.default[:razor][:name] = node[:fqdn]
+node.default[:razor][:name] = node[:fqdn]
 
 # When DNS is NOT available, use direct IP
-node.default[:razor][:name] = '192.168.10.2'
+# node.default[:razor][:name] = '192.168.10.2'
 
 node.default[:razor][:user] = 'razor-server'
 node.default[:razor][:group] = 'razor-server'
@@ -27,9 +27,12 @@ node.default[:razor][:database][:name] = 'razor-server'
 node.default[:razor][:database][:user] = 'razor-server'
 node.default[:razor][:database][:pass] = 'razor-server'
 
-node.normal[:postgresql][:version] = 9.3
-node.normal[:postgresql][:enable_pgdg_apt] = true
-node.default[:postgresql][:password][:postgres] = node[:razor][:database][:pass]
+#node.normal[:postgresql][:version] = 9.3
+node.normal[:postgresql][:enable_pgdg_apt] = true # We want at least version 8.4+
+node.normal[:postgresql][:enable_pgdg_yum] = true # We want at least version 8.4+
+if Chef::Config[:solo] 
+  node.default[:postgresql][:password][:postgres] = node[:razor][:database][:pass]
+end
 
 node.default[:postgresql][:pg_hba] = [
 	{ comment: '# razor-server', type: 'host', db: node[:razor][:database][:name], user: node[:razor][:database][:user], addr: '127.0.0.1/32', method: 'md5' },
