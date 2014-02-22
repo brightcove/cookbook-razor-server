@@ -28,10 +28,13 @@ node.default[:razor][:database][:name] = 'razor-server'
 node.default[:razor][:database][:user] = 'razor-server'
 node.default[:razor][:database][:pass] = 'razor-server'
 
+# Let the user decide what version and if to use PGDG repos
 #node.normal[:postgresql][:version] = 9.3
-node.normal[:postgresql][:enable_pgdg_apt] = true # We want at least version 8.4+
-node.normal[:postgresql][:enable_pgdg_yum] = true # We want at least version 8.4+
-if Chef::Config[:solo] 
+#node.normal[:postgresql][:enable_pgdg_apt] = true
+#node.normal[:postgresql][:enable_pgdg_yum] = true
+
+if Chef::Config[:solo]
+  # The postgresql cookbook requires the password set when in Chef Solo
   node.default[:postgresql][:password][:postgres] = node[:razor][:database][:pass]
 end
 
