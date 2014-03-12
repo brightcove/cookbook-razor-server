@@ -36,6 +36,15 @@ template "#{node[:razor][:config][:dest]}/config.yaml" do
   mode  00660
 end
 
+# Support custom brokers and tasks outside the pkg managed folder
+%w[ brokers tasks ].each do |dir|
+  directory "#{node[:razor][:config][:dest]}/#{dir}" do
+    path  "#{node[:razor][:config][:dest]}/#{dir}"
+    owner node[:razor][:user]
+    group node[:razor][:group]
+  end 
+end
+
 execute 'Create/Migrate database' do
   command 'razor-admin -e production migrate-database'
   path    ['/usr/local/bin']
