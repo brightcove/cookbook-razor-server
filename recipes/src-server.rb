@@ -1,7 +1,7 @@
 # encoding: UTF-8
 #
 # Cookbook Name:: razor-server
-# Recipe:: server
+# Recipe:: src-server
 
 # Razor likes to run on top of their Torquebox design
 include_recipe 'razor-server::torquebox'

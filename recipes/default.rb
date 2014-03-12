@@ -4,5 +4,10 @@
 # Recipe:: default
 
 include_recipe 'razor-server::deps'
-include_recipe 'razor-server::server'
+
+if node[:razor][:source]
+  include_recipe 'razor-server::src-server'
+else
+  include_recipe 'razor-server::pkg'
+end
 

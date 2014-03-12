@@ -5,8 +5,8 @@ Vagrant.configure("2") do |config|
   config.berkshelf.berksfile_path = "./Berksfile"
   config.berkshelf.enabled = true
   
-  config.vm.define "razor-server" do |c|
-    c.vm.hostname = "razor-server-berkshelf"
+  config.vm.define "razor" do |c|
+    c.vm.hostname = "razor"
     c.vm.box = "opscode_ubuntu-12.04"
     c.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box"
   
@@ -31,7 +31,7 @@ Vagrant.configure("2") do |config|
   
      c.vm.provider :virtualbox do |vb|
        # vb.gui = true
-       vb.customize ["modifyvm", :id, "--memory", "1024"]
+       vb.customize ["modifyvm", :id, "--memory", "4096"]
      end
   
     # An array of symbols representing groups of cookbook described in the Vagrantfile
@@ -45,7 +45,8 @@ Vagrant.configure("2") do |config|
     c.vm.provision :chef_solo do |chef|
       chef.json = {
         "razor" => {
-          "name" => "192.168.10.2"
+          "name" => "192.168.10.2",
+          "source" => false
         }
       }
   
