@@ -11,3 +11,4 @@ else
   include_recipe 'razor-server::pkg'
 end
 
+include_recipe 'razor-server::ui'

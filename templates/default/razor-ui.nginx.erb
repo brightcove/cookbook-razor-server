@@ -1,0 +1,21 @@
+server {
+	listen   80;
+	server_name  <%= node[:razor][:name] %>;
+
+	access_log  /var/log/razor-ui/access.log;
+	error_log   /var/log/razor-ui/error.log;
+
+	location / {
+		root  <%= node["razor-ui"][:install][:dest] %>;
+		index index.html;
+	}
+
+	location /api {
+		proxy_pass            http://localhost:8080/api;
+		proxy_set_header      Host            $host;
+		proxy_set_header      X-Real-IP       $remote_addr;
+		proxy_set_header      X-Forwarded-for $remote_addr;
+		proxy_redirect        http://localhost:8080/api/ http://<%= node[:razor][:name] %>/api/;
+		proxy_connect_timeout 300;
+	}
+}
