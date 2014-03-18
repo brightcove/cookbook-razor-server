@@ -18,7 +18,7 @@ package node[:razor][:libarchive]
 
 package 'unzip'
 package 'curl'
-package 'openipmi'
+package 'ipmitool'
 
 if node[:razor][:source]
   # Install Java
