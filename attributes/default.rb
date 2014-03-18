@@ -55,6 +55,11 @@ node.default[:razor][:dhcp][:evals] = [%Q{
   }
 }]
 
+# Razor UI (masteinhauser version)
+node.default["razor-ui"][:install][:url]  = "https://codeload.github.com/masteinhauser/razor-ui/legacy.tar.gz/master"
+node.default["razor-ui"][:install][:base] = "/opt"
+node.default["razor-ui"][:install][:dest] = "/opt/razor-ui"
+
 # Install from Source options
 node.default[:razor][:config][:dest] = '/etc/razor'
 node.default[:razor][:install][:version] = '0.14.1'
