@@ -1,25 +1,25 @@
 # encoding: UTF-8
 #
-# Cookbook Name:: razor-server
+# Cookbook Name:: razor_server
 # Recipe:: src-torquebox
 #
 
-execute 'wget torquebox' do
-  command "wget #{node[:razor][:torquebox][:url]} -O /tmp/razor-torquebox.zip"
-  creates '/tmp/razor-torquebox.zip'
+remote_file 'torquebox' do
+  source node[:razor][:torquebox][:url]
+  notifies :put, 'ark[razor-torquebox]', :immediately
 end
 
 ark 'razor-torquebox' do
   version  node[:razor][:torquebox][:version]
   checksum node[:razor][:torquebox][:checksum]
 #  url      node[:razor][:torquebox][:url]
-  url      'file:///tmp/razor-torquebox.zip'
+  url      "file://#{Chef::Config[:file_cache_path]}/razor-torquebox.zip"
   path     node[:razor][:torquebox][:base]
   owner    node[:razor][:torquebox][:user]
   group    node[:razor][:torquebox][:group]
   mode     00755
 #  action   :install
-  action   :put
+  action   :nothing
   strip_leading_dir true
   has_binaries ['jruby/bin/jruby']
 end

@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: razor-bc
+# Cookbook Name:: razor_server
 # Recipe:: ui
 #
 # Copyright 2014, Brightcove, Inc
@@ -14,7 +14,7 @@ include_recipe "nginx::http_stub_status_module"
 # Download and Extract the Razor UI
 ark "razor-ui" do
   path      node["razor-ui"][:install][:base]
-  url       "https://github.com/masteinhauser/razor-ui/tarball/master"
+  url       node["razor-ui"][:install][:url]
   extension "tar.gz"
   owner  node[:nginx][:user]
   group  node[:nginx][:group]

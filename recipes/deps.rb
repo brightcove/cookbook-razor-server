@@ -1,14 +1,18 @@
 # encoding: UTF-8
 #
-# Cookbook Name:: razor-server
+# Cookbook Name:: razor_server
 # Recipe:: deps
 
 # Due to Postgresql cookbook not playing nice
 execute 'apt-get-update' do
   command 'apt-get update'
   ignore_failure true
-  only_if { apt_installed? }
-  not_if { ::File.exists?('/var/lib/apt/periodic/update-success-stamp') }
+#  only_if { apt_installed? }
+  only_if { platform_family?("debian") }
+  not_if do
+    ::File.exists?('/var/lib/apt/periodic/update-success-stamp') &&
+      ::File.mtime('/var/lib/apt/periodic/update-success-stamp') < Time.now - 86400
+  end
 end.run_action(:run)
 
 include_recipe 'apt'
@@ -18,7 +22,7 @@ package node[:razor][:libarchive]
 
 package 'unzip'
 package 'curl'
-package 'openipmi'
+package 'ipmitool'
 
 if node[:razor][:source]
   # Install Java
@@ -32,8 +36,8 @@ if node[:razor][:source]
     password '*'
     home node[:razor][:torquebox][:dest]
     shell '/bin/bash'
-    comment 'razor-server daemon user'
+    comment 'razor_server daemon user'
   end
 end
 
-include_recipe 'razor-server::postgresql'
+include_recipe 'razor_server::postgresql'

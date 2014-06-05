@@ -51,7 +51,7 @@ Vagrant.configure("2") do |config|
       }
   
       chef.run_list = [
-          "recipe[razor-server::default]"
+          "recipe[razor_server::default]"
       ]
     end
   end

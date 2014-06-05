@@ -1,6 +1,6 @@
 # encoding: UTF-8
 #
-# Cookbook Name:: razor-server
+# Cookbook Name:: razor_server
 # Recipe:: postgresql
 
 include_recipe 'postgresql::server'
