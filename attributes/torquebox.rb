@@ -1,6 +1,6 @@
 # encoding: UTF-8
 #
-# Cookbook Name:: razor-server
+# Cookbook Name:: razor_server
 # Attributes:: torquebox
 
 node.default[:razor][:torquebox][:version] = '3.0.1'

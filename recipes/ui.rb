@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: razor-bc
+# Cookbook Name:: razor_server
 # Recipe:: ui
 #
 # Copyright 2014, Brightcove, Inc

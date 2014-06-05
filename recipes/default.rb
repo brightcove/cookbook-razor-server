@@ -1,14 +1,14 @@
 # encoding: UTF-8
 #
-# Cookbook Name:: razor-server
+# Cookbook Name:: razor_server
 # Recipe:: default
 
-include_recipe 'razor-server::deps'
+include_recipe 'razor_server::deps'
 
 if node[:razor][:source]
-  include_recipe 'razor-server::src-server'
+  include_recipe 'razor_server::src-server'
 else
-  include_recipe 'razor-server::pkg'
+  include_recipe 'razor_server::pkg'
 end
 
-include_recipe 'razor-server::ui'
+include_recipe 'razor_server::ui'

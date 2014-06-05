@@ -1,6 +1,6 @@
 # encoding: UTF-8
 #
-# Cookbook Name:: razor-server
+# Cookbook Name:: razor_server
 # Recipe:: pkg
 
 ### Install PuppetLabs Repo
@@ -62,20 +62,22 @@ end
 #  action :put
 #end
 
-execute 'wget razor-microkernel' do
-  command "wget #{node[:razor][:microkernel][:url]} -O /tmp/razor-microkernel.tar"
-  creates '/tmp/razor-microkernel.tar'
+remote_file 'razor-microkernel' do
+  path "#{Chef::Config[:file_cache_path]}/razor-microkernel.tar"
+  source node[:razor][:microkernel][:url]
+  notifies :run, "execute[untar razor-microkernel]", :immediately
 end
 
 execute 'untar razor-microkernel' do
-  command "tar -xvf /tmp/razor-microkernel.tar -C #{node[:razor][:install][:repo]}/"
+  command "tar -xvf #{Chef::Config[:file_cache_path]}/razor-microkernel.tar -C #{node[:razor][:install][:repo]}/"
   creates "#{node[:razor][:install][:repo]}/microkernel"
+  action :nothing
 end
 
 if node[:razor][:tftp]
-  include_recipe 'razor-server::tftp'
+  include_recipe 'razor_server::tftp'
 end
 
 if node[:razor][:dhcp]
-  include_recipe 'razor-server::dhcp'
+  include_recipe 'razor_server::dhcp'
 end
