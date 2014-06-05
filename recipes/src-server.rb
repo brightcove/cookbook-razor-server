@@ -1,25 +1,25 @@
 # encoding: UTF-8
 #
-# Cookbook Name:: razor-server
+# Cookbook Name:: razor_server
 # Recipe:: src-server
 
 # Razor likes to run on top of their Torquebox design
-include_recipe 'razor-server::torquebox'
+include_recipe 'razor_server::src-torquebox'
 
-execute 'wget razor-server' do
-  command "wget #{node[:razor][:install][:url]} -O /tmp/razor-server.zip"
-  creates '/tmp/razor-server.zip'
+remote_file 'razor-server' do
+  source node[:razor][:install][:url]
+  notifies :put, 'ark[razor-server]', :immediately
 end
 
 ark 'razor-server' do
 #  url   node[:razor][:install][:url]
-  url      'file:///tmp/razor-server.zip'
+  url      "file://#{Chef::Config[:file_cache_path]}/razor-server.zip"
   path  node[:razor][:install][:base]
   owner node[:razor][:user]
   group node[:razor][:group]
   strip_leading_dir true
   mode 00755
-  action :put
+  action :nothing
 end
 
 template "#{node[:razor][:install][:dest]}/bin/razor-binary-wrapper" do
@@ -111,14 +111,15 @@ end
 #  action :put
 #end
 
-execute 'wget razor-microkernel' do
-  command "wget #{node[:razor][:microkernel][:url]} -O /tmp/razor-microkernel.tar"
-  creates '/tmp/razor-microkernel.tar'
+remote_file 'razor-microkernel' do
+  source node[:razor][:microkernel][:url]
+  notifies :run, 'execute[untar razor-microkernel]', :immediately
 end
 
 execute 'untar razor-microkernel' do
-  command "tar -xvf /tmp/razor-microkernel.tar -C #{node[:razor][:install][:repo]}/"
+  command "tar -xvf #{Chef::Config[:file_cache_path]}/razor-microkernel.tar -C #{node[:razor][:install][:repo]}/"
   creates "#{node[:razor][:install][:repo]}/microkernel"
+  action :nothing
 end
 
 directory node[:razor][:install][:repo] do
@@ -130,9 +131,9 @@ directory node[:razor][:install][:repo] do
 end
 
 if node[:razor][:tftp]
-  include_recipe 'razor-server::tftp'
+  include_recipe 'razor_server::tftp'
 end
 
 if node[:razor][:dhcp]
-  include_recipe 'razor-server::dhcp'
+  include_recipe 'razor_server::dhcp'
 end

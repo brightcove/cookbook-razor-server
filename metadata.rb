@@ -1,11 +1,11 @@
 # encoding: UTF-8
-name             'razor-server'
+name             'razor_server'
 maintainer       'Myles Steinhauser'
 maintainer_email 'myles.steinhasuer@gmail.com'
 license          'MIT License'
 description      'Installs/Configures puppetlabs/razor-server'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.2.0'
+version          '0.3.2'
 
 %w{ ubuntu }.each do |os|
   supports os
