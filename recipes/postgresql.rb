@@ -10,9 +10,9 @@ include_recipe 'database::postgresql'
 
 postgresql_connection_info = {
   host: 'localhost',
-  port: node['postgresql']['config']['port'],
+  port: node[:postgresql][:config][:port],
   username: 'postgres',
-  password: node['postgresql']['password']['postgres']
+  password: node[:postgresql][:password][:postgres]
 }
 
 postgresql_database_user node[:razor][:database][:user] do
