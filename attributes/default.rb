@@ -60,10 +60,10 @@ default[:razor][:dhcp][:evals] = [%Q{
 }]
 
 # Razor UI (masteinhauser version)
-default["razor-ui"][:port] = "80"
-default["razor-ui"][:install][:url]  = "https://codeload.github.com/masteinhauser/razor-ui/legacy.tar.gz/master"
-default["razor-ui"][:install][:base] = "/opt"
-default["razor-ui"][:install][:dest] = "/opt/razor-ui"
+default["razor-ui"][:port] = "80" # ~FC019
+default["razor-ui"][:install][:url]  = "https://codeload.github.com/masteinhauser/razor-ui/legacy.tar.gz/master" # ~FC019
+default["razor-ui"][:install][:base] = "/opt" # ~FC019
+default["razor-ui"][:install][:dest] = "/opt/razor-ui" # ~FC019
 
 # Install from Source options
 default[:razor][:config][:dest] = '/etc/razor'
