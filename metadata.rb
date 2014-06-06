@@ -5,7 +5,7 @@ maintainer_email 'myles.steinhasuer@gmail.com'
 license          'Apache 2.0 License'
 description      'Installs/Configures puppetlabs/razor-server'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.3.3'
+version          '0.3.4'
 
 %w{ ubuntu }.each do |os|
   supports os
