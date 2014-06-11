@@ -5,7 +5,7 @@
 
 include_recipe 'razor_server::deps'
 
-if node[:razor][:source]
+if node['razor']['source']
   include_recipe 'razor_server::src-server'
 else
   include_recipe 'razor_server::pkg'

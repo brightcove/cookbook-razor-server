@@ -18,23 +18,23 @@ end.run_action(:run)
 include_recipe 'apt'
 include_recipe 'build-essential'
 
-package node[:razor][:libarchive]
+package node['razor']['libarchive']
 
 package 'unzip'
 package 'curl'
 package 'ipmitool'
 
-if node[:razor][:source]
+if node['razor']['source']
   # Install Java
   include_recipe 'java'
   
-  group node[:razor][:group]
+  group node['razor']['group']
   
-  user node[:razor][:user] do
-    group node[:razor][:group]
+  user node['razor']['user'] do
+    group node['razor']['group']
     system true
     password '*'
-    home node[:razor][:torquebox][:dest]
+    home node['razor']['torquebox']['dest']
     shell '/bin/bash'
     comment 'razor_server daemon user'
   end
