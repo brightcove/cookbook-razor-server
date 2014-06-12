@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
 gem 'rake'
-gem 'foodcritic', :github => "acrmp/foodcritic"
+gem 'foodcritic'
 gem 'berkshelf'
 gem 'chefspec'
