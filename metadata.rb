@@ -1,7 +1,7 @@
 # encoding: UTF-8
 name             'razor_server'
 maintainer       'Myles Steinhauser'
-maintainer_email 'myles.steinhasuer@gmail.com'
+maintainer_email 'myles.steinhauser@gmail.com'
 license          'Apache 2.0 License'
 description      'Installs/Configures puppetlabs/razor-server'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
