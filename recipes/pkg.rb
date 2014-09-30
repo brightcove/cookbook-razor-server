@@ -13,13 +13,13 @@ when 'ubuntu', 'debian'
     key           'https://apt.puppetlabs.com/keyring.gpg'
     action :add
   end
-# when 'centos', 'redhat'
-#   yum_repository 'puppetlabs' do
-#     description ''
-#     baseurl     ''
-#     gpgkey      'https://yum.puppetlabs.com/RPM-GPG-KEY-puppetlabs'
-#     action :create
-#   end
+when 'centos', 'redhat'
+  yum_repository 'puppetlabs' do
+    description 'Puppet Labs Repo'
+    baseurl     'http://yum.puppetlabs.com/el/$releasever/products/$basearch'
+    gpgkey      'http://yum.puppetlabs.com/RPM-GPG-KEY-puppetlabs'
+    action :create
+  end
 end
 
 ### Install Razor package (which pulls in most deps)
