@@ -28,6 +28,7 @@ template "razor-ui" do
   mode   0660
   owner  node['nginx']['user']
   group  node['nginx']['group']
+  notifies :reload, "service[nginx]", :immediately
 end
 
 # Configure UI to Razor install
